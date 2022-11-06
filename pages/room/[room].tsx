@@ -1,7 +1,7 @@
 import { NextRouter, useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react'
-import { MEETHOUR_LINK, STATIC_ROOM } from '../utils/contants';
-import { parseURLParams } from '../utils/parseUrl'
+import { MEETHOUR_LINK, STATIC_ROOM } from '../../utils/contants';
+import { parseURLParams } from '../../utils/parseUrl'
 
 interface stateTypes {
   mt: string | null;
@@ -32,9 +32,10 @@ const removeQueryParam = (param,router: NextRouter) => {
 
 
 
-export default function Jitsi() {
+export default function Room() {
   const router = useRouter();
   const [state,setState] =  useState<stateTypes>(stateM)
+  const { room } = router.query
   React.useEffect(() => {
     setState(prev => ({
       ...prev,
@@ -42,8 +43,8 @@ export default function Jitsi() {
     }))
     const isMt = parseURLParams(window.location.href, true, 'search')
     if('mt' in isMt){
-      removeQueryParam(undefined,router);
-      const linkMH = state.room ? MEETHOUR_LINK + '/' + state.room + '?mt=' + isMt['mt'] : MEETHOUR_LINK + '/' + STATIC_ROOM + '?mt=' + isMt['mt']
+    //   removeQueryParam(undefined,router);
+      const linkMH = room ? MEETHOUR_LINK + '/' + room + '?mt=' + isMt['mt'] : MEETHOUR_LINK + '/' + STATIC_ROOM + '?mt=' + isMt['mt']
       setTimeout(() => {
         setState(prev => ({
           ...prev,
@@ -54,8 +55,18 @@ export default function Jitsi() {
 
       },1000)
 
+    } else {
+        const linkMH = room ? MEETHOUR_LINK + '/' + room : MEETHOUR_LINK + '/' + STATIC_ROOM
+        setTimeout(() => {
+          setState(prev => ({
+            ...prev,
+            link: linkMH,
+            isLoading: false
+          }))
+  
+        },1000)
     }
-  },[state.room])
+  },[room])
 
   useEffect(() => {
     document.body.style.overflow = 'hidden'

@@ -9,10 +9,14 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@hapi/bourne": "^3.0.0",
+    "@reduxjs/toolkit": "^1.8.6",
     "next": "12.3.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-jitsi": "^1.0.4"
+    "react-jitsi": "^1.0.4",
+    "react-redux": "^8.0.4",
+    "swr": "^1.3.0"
   },
   "devDependencies": {
     "@types/node": "18.11.0",
